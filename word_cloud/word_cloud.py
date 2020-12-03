@@ -2,6 +2,8 @@
 import matplotlib as plt
 from wordcloud import WordCloud
 import MeCab as mecab
+from PIL import Image
+import numpy as np
 
 def create_word_list(filepath):
     # ファイルをオープンする
@@ -32,13 +34,11 @@ def create_word_list(filepath):
 def create_wordcloud(text):
     # フォントのパス
     fpath = "./ipam.ttc"
-    # 除外ワード
-    stop_words = ["いい", "感じ", "あっ", "使っ", "あり", "やっ", "する", "いる", "なっ", "でき", "よう", "てる", \
-    "思っ", "さん", "こと", "ところ", "ため", "ところ", "みよ"]
+    mask = np.array(Image.open('ichiro.jpeg'))
     # wordCloud のインスタンス生成
-    word_cloud = WordCloud(background_color="white", font_path=fpath, stopwords=set(stop_words), width=900, height=500).generate(text)
+    word_cloud = WordCloud(background_color="white", font_path=fpath, mask=mask, width=900, height=500).generate(text)
     # png ファイルに出力
-    word_cloud.to_file("./result.png")
+    word_cloud.to_file("./ichiro_wc.png")
 
 
 word_list = create_word_list("./data.txt")
